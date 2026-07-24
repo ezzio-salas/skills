@@ -27,7 +27,7 @@ work until the window is clear enough to continue safely.
 Prefer a first-party host usage tool when available. In Claude Code, use:
 
 ```sh
-npx -y ccusage@latest blocks --active --json
+npx -y ccusage@20 blocks --active --json
 ```
 
 Use the JSON to identify the active block start, current cost or percentage, and
