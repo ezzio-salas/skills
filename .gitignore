@@ -1,0 +1,11 @@
+# Bridge token written by `plan local serve` into <plan-dir>/.plan-url. It grants
+# access to the loopback bridge on the machine that created it, so it stays out
+# of the repo. Matches at any depth.
+.plan-url
+
+# Scratch plan output the local-files mode writes when a plan should not be
+# checked in.
+.agent-native/
+
+# macOS
+.DS_Store
