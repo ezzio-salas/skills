@@ -76,6 +76,22 @@ when the plan itself should live in source control or stay on your machine. Use
 when you do not. The bridge URL works on the machine running it and is not a
 share link.
 
+## Visibility & sharing
+
+A hosted plan describes real repo internals: file layout, schemas, API surfaces,
+and unreleased work. Treat its visibility as part of creating it.
+
+The scope a new hosted plan starts in is not documented here, and plans created
+as a guest are claimed into an account on sign-in. Do not assume a safe default.
+Set the scope explicitly with `set-resource-visibility` (public, login, or
+org-scoped), and grant people access with `share-resource` rather than widening
+the plan.
+
+For anything covering private or unreleased work, set the narrowest scope that
+still meets the review need, and set it before sharing the link. Public plans
+are viewable by anyone holding the link. When a plan should never leave the
+machine, use local-files mode instead of gating a hosted plan after the fact.
+
 ## Install
 
 ```sh
