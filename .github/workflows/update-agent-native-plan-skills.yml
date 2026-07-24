@@ -113,6 +113,16 @@ jobs:
 
           Check run before opening/updating this PR:
           - \`npm run check\`
+
+          **Review required before merge.** \`npm run check\` validates
+          frontmatter and that the synced file list and contents match the
+          source. It does not review what the content says. Skill Markdown is
+          executable instruction for an agent, so read this diff as code:
+
+          - Instructions that send repo content to a network destination.
+          - Instructions that read credentials, \`.env\` files, or private data.
+          - Invisible or bidirectional Unicode hiding text from this diff view.
+          - New commands, especially ones run without confirmation.
           EOF
 
           pr_number="$(gh pr list --head "$UPDATE_BRANCH" --state open --json number --jq '.[0].number // ""')"
@@ -130,8 +140,25 @@ jobs:
           fi
           echo "number=$pr_number" >> "$GITHUB_OUTPUT"
 
-      - name: Auto-merge update PR
+      - name: Summarize pending review
         if: steps.diff.outputs.changed == 'true'
         env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token || github.token }}
-        run: gh pr merge "${{ steps.pr.outputs.number }}" --squash --delete-branch
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          BASE_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          {
+            echo "## Visual skills update awaiting review"
+            echo
+            echo "PR #${PR_NUMBER} syncs visual-plan and visual-recap."
+            echo
+            echo "This PR is **not** merged automatically. \`npm run check\`"
+            echo "verifies frontmatter and that the synced files match the"
+            echo "source; it does not review what the content says."
+            echo
+            echo "Skill Markdown is executable instruction for an agent, so a"
+            echo "human reviews the content before it reaches main."
+            echo
+            echo '```'
+            git diff --stat "origin/${BASE_BRANCH}" -- skills/visual-plan skills/visual-recap
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
