@@ -66,7 +66,11 @@ actual codebase.
 - **Local files only:** writes a local MDX folder, starts a localhost bridge,
   and opens the hosted Plan UI against that local source. No sharing, all local,
   and no plan content is written to the hosted database. The skill must not
-  create a hosted Plan first and export it back to local files.
+  create a hosted Plan first and export it back to local files. The renderer is
+  still the hosted page, so the browser contacts plan.agent-native.com: the
+  local-plan route disables DOM autocapture and session replay, but sanitized
+  pageviews and error monitoring still reach that origin. Plan content stays on
+  your machine; the page view itself is not fully offline.
 - **Self-hosted/custom URL:** connects the skill to your own Plan app or local
   development tunnel.
 
