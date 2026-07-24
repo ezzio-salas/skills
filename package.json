@@ -8,7 +8,8 @@
   "scripts": {
     "check:skills": "node scripts/check-skill-frontmatter.mjs",
     "check:plan-skills": "node scripts/sync-agent-native-plan-skills.mjs --check",
+    "check:secrets": "node scripts/scan-secrets.mjs",
     "sync:agent-native-plan-skills": "node scripts/sync-agent-native-plan-skills.mjs",
-    "check": "npm run check:skills && npm run check:plan-skills"
+    "check": "npm run check:skills && npm run check:secrets && npm run check:plan-skills"
   }
 }
