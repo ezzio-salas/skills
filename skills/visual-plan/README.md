@@ -81,16 +81,18 @@ share link.
 A hosted plan describes real repo internals: file layout, schemas, API surfaces,
 and unreleased work. Treat its visibility as part of creating it.
 
-The scope a new hosted plan starts in is not documented here, and plans created
-as a guest are claimed into an account on sign-in. Do not assume a safe default.
-Set the scope explicitly with `set-resource-visibility` (public, login, or
-org-scoped), and grant people access with `share-resource` rather than widening
-the plan.
+**A new hosted plan is private.** Visibility is one of `private`, `org`, or
+`public`, and the column is `not null default 'private'`, so a plan is only ever
+widened by an explicit action. Sharing is opt-in, not opt-out.
 
-For anything covering private or unreleased work, set the narrowest scope that
-still meets the review need, and set it before sharing the link. Public plans
-are viewable by anyone holding the link. When a plan should never leave the
-machine, use local-files mode instead of gating a hosted plan after the fact.
+Widen it with `set-resource-visibility`, or grant individual people access with
+`share-resource`, which is the narrower of the two. `public` means anyone
+holding the link can read the plan, so treat setting it as publishing.
+
+Set the scope before sharing the link, and prefer `share-resource` or `org` over
+`public` for anything not meant to leave the team. When a plan should never
+leave the machine at all, use local-files mode rather than creating a hosted
+plan and narrowing it afterwards.
 
 ## Install
 
