@@ -101,3 +101,23 @@ npx @agent-native/skills@latest add --skill visual-recap --mode local-files
 
 The skill expects the [Plan MCP connector](https://www.agent-native.com/docs/template-plan)
 to be available when hosted mode is used.
+
+## Secrets in recap content
+
+Hosted mode publishes recap content derived from a real diff, so a credential
+that survives into a block leaves the machine. The skill instructs the agent to
+redact secrets, but a model instruction is a best effort, not a guarantee.
+
+Run the repo's scanner over generated recap content before a hosted write:
+
+```sh
+node scripts/scan-secrets.mjs <plan-dir>/plan.mdx
+```
+
+It exits non-zero and names the file, line, and rule for every match. It covers
+AWS, GitHub, Google, OpenAI, Slack, and Stripe credential shapes plus private
+key blocks, and it ignores obvious placeholders so redacted examples such as
+`sk-•••` still pass. `npm run check:secrets` runs the same scan across the repo.
+
+Use `--mode local-files` for diffs that touch credentials; nothing is written to
+the hosted database in that mode.
