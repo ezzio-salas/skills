@@ -33,7 +33,7 @@ than value.
 When Claude Code does not expose a better first-party usage signal, use:
 
 ```sh
-npx -y ccusage@latest blocks --active --json
+npx -y ccusage@20 blocks --active --json
 ```
 
 The agent should read the active block start, current usage or cost, and time
